@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AI Truth Analyzer</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+  background: #1f1c2c;
+  color: white;
+  font-family: Arial;
+  display: flex;
+  justify-content: center;
+  padding: 40px;
+}
+
+.container {
+  width: 600px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+select, textarea, button {
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+}
+
+textarea {
+  height: 100px;
+}
+
+button {
+  background: orange;
+  color: white;
+  cursor: pointer;
+}
+
+.result {
+  margin-top: 20px;
+  padding: 15px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 10px;
+}
+
+.history {
+  margin-top: 20px;
+}
+
+.history-item {
+  margin-bottom: 10px;
+  padding: 10px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 8px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>AI Truth Analyzer</h1>
+
+<form method="POST" action="/analyze">
+
+  <select name="user_id">
+    <option value="user1" {% if user_id == "user1" %}selected{% endif %}>User 1</option>
+    <option value="user2" {% if user_id == "user2" %}selected{% endif %}>User 2</option>
+    <option value="user3" {% if user_id == "user3" %}selected{% endif %}>User 3</option>
+  </select>
+
+  <textarea name="text" placeholder="Enter a statement..." required></textarea>
+
+  <button type="submit">Analyze</button>
+
+</form>
+
+{% if result %}
+<div class="result">
+  <h3>Analysis Result:</h3>
+  <p>{{ result }}</p>
+</div>
+{% endif %}
+
+<div class="history">
+  <h3>History:</h3>
+  {% for item in history %}
+    <div class="history-item">
+      <strong>Input:</strong> {{ item.input }}<br>
+      <strong>Output:</strong> {{ item.output }}
+    </div>
+  {% endfor %}
+</div>
+
+</div>
+
+</body>
+</html>
